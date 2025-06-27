@@ -13,7 +13,7 @@ const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
   return (
     <>
-      <Toaster/>
+      {/* <Toaster/> */}
       {!isAdminRoute && <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
@@ -23,7 +23,7 @@ const App = () => {
         <Route path='/my-bookings' element={<MyBookings />} />
         <Route path='/favorite' element={<Favorite />} />
       </Routes>
-      {!isAdminRoute && <Footer/>}
+      {/* {!isAdminRoute && <Footer/>} */}
     </>
   )
 }
