@@ -1,0 +1,11 @@
+[33mcommit 3a7dc2edce022a498bead704478a75edafb02e3f[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Divyanshu <divyanshutiwari173@gmail.com>
+Date:   Sat Jun 28 01:08:32 2025 +0530
+
+    feat(navbar): add responsive navbar with logo, nav links, login button, and mobile menu toggle
+
+[33mcommit 162d8a97a8b3d04c8b6e4ed36f40a079cfbe1b69[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Divyanshu <divyanshutiwari173@gmail.com>
+Date:   Fri Jun 27 14:02:17 2025 +0530
+
+    initial setup commit
