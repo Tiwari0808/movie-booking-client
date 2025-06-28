@@ -2,12 +2,20 @@ import { assets } from "../assets/assets";
 import { BsCalendar2 } from "react-icons/bs";
 import { LuTimer } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const scale = useTransform(scrollY, [0, 300], [1, 0.92]);
+  const navigate = useNavigate();
+
   return (
     <div className="bg-[url('/backgroundImage.png')] h-screen bg-cover bg-center">
-      <div className="flex flex-col gap-[3vh] max-lg:left-[5vw] max-md:top-[50vh] absolute left-[11vw] top-[25vh] align-middle">
+      <motion.div
+        className="flex flex-col gap-[3vh] max-lg:left-[5vw] max-md:top-[50vh] absolute left-[11vw] top-[25vh] align-middle"
+        style={{ opacity, scale }}>
         <motion.img
           src={assets.marvelLogo}
           alt="movie logo"
@@ -55,11 +63,12 @@ const HeroSection = () => {
           className=" bg-primary hover:bg-primary-dull rounded-[32px] max-w-[164px] max-md:w-[100px] h-11 max-md:h-8 max-md:text-[10px] flex justify-center items-center gap-2 max-md:gap-1 cursor-pointer"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}>
+          transition={{ duration: 0.5, delay: 1 }}
+          onClick={() => navigate("/movies")}>
           Explore Movies
           <FaArrowRight />
         </motion.button>
-      </div>
+      </motion.div>
     </div>
   );
 };
