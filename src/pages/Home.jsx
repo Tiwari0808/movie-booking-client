@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import HeroSection from "../components/HeroSection";
 import FeaturedSection from "../components/FeaturedSection";
 import { motion } from "framer-motion";
+import TrailerSection from "../components/TrailerSection";
 
 const Home = () => {
   useEffect(() => {
@@ -18,6 +19,7 @@ const Home = () => {
         <HeroSection />
       </motion.div>
       <FeaturedSection />
+      <TrailerSection/>
     </div>
   );
 };

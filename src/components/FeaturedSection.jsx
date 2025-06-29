@@ -9,9 +9,9 @@ const FeaturedSection = () => {
     const navigate = useNavigate();
     return (
         <motion.div 
-         initial={{opacity:0,y:40}}
-         whileInView={{opacity:1,y:0}}
-         transition={{duration:0.8}}
+        //  initial={{opacity:0,y:40}}
+        //  whileInView={{opacity:1,y:0}}
+        //  transition={{duration:0.8}}
 
 
          className='flex flex-col px-[5vw] sm:px-[6vw] md:px-[6vw] lg:px-[10vw] overflow-hidden mt-[3vh] '>
