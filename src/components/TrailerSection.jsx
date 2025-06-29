@@ -10,7 +10,7 @@ const TrailerSection = () => {
     <div className='px-[5vw]  md:px-[10vw] mt-10'>
       <h2 className='font-bold text-[20px] sm:text-[16px]'>Trailers</h2>
 
-      <div className='mt-10 w-full max-w-[900px] mx-auto flex items-center justify-center'>
+      <div className='mt-10 w-full max-w-[700px] mx-auto flex items-center justify-center'>
         <ReactPlayer
           src={currentTrailer.videoUrl}
           controls
