@@ -12,7 +12,7 @@ const MovieCard = ({movie}) => {
         whileInView={{opacity:1,y:0}}
         transition={{duration:0.6}}
         className='relative p-3 w-[268px] h-[356px] bg-[#12161C] rounded-[16px] flex flex-col gap-[1rem]'>
-            <img onClick={()=>(navigate(`/movies/:${movie.id}`))} className='bg-cover bg-center rounded-[6px] h-[161px]' src={movie.backdrop_path} alt="movie" />
+            <img onClick={()=>(navigate(`/movies/${movie.id}`))} className='bg-cover bg-center rounded-[6px] h-[161px] cursor-pointer' src={movie.backdrop_path} alt="movie" />
             <p className='h-[38px] font-[Heebo] font-bold leading-[117%] align-middle'>{movie.title}</p>
             <div><p className='font-[Heebo] text-[14px] font-semibold text-[#797B7D] align-middle'>{`${new Date(movie.release_date).getUTCFullYear()} - ${movie.genres.slice(0,2).map(genre=>genre.name).join(" | ")} - ${getHours(movie.runtime)}`}</p></div>
             <div className='flex items-center justify-between mt-5'>

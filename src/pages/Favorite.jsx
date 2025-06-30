@@ -5,7 +5,7 @@ import BlurCircle from '../components/BlurCircle'
 const Favorite = () => {
   return dummyShowsData.length > 0 ? (
     <div className='flex flex-col gap-[3vh] px-[4vw] my-[20vh]'>
-      <h1 className='font-bold text-[20px] sm:text-[16px]'>Fevorites</h1>
+      <h1 className='font-bold text-[20px] sm:text-[16px]'>Your fevorite movies</h1>
       <BlurCircle top={0} right={0} />
       <div className='flex gap-3 flex-wrap'>
         {dummyShowsData.map((movie) => (
