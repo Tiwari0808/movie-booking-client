@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { dummyCastsData, dummyDateTimeData, dummyShowsData } from '../assets/assets';
-import { FaPlay, FaStar } from 'react-icons/fa';
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaArrowRight, FaPlay, FaStar } from 'react-icons/fa';
 import { CiHeart } from 'react-icons/ci';
 import BlurCircle from '../components/BlurCircle';
 import getHours from '../lib/getHours';
 import CastImage from '../components/CastImage';
+import MovieCard from '../components/MovieCard';
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -21,11 +22,14 @@ const MovieDetails = () => {
     getDetails()
   }, [id])
 
-
+  let a = Math.floor(Math.random() * 10);
+  let b = Math.floor(Math.random() * 10);
+  let start = Math.min(a, b);
+  let end = Math.max(a, b);
 
 
   return show ? (
-    <div className='mt-[27vh] px-[3vw] md:px-[15vw] '>
+    <div className='mt-[27vh] px-[3vw] md:px-[15vw] flex flex-col gap-[7vh]'>
       <div className='flex gap-[4vh] flex-col md:flex-row '>
         <img className='rounded-[18px] w-[278px] h-[417px]' src={show.movie.poster_path} alt="Movie poster" />
         <div className='flex flex-col gap-[2.5vh]'>
@@ -54,16 +58,56 @@ const MovieDetails = () => {
           </div>
         </div>
       </div>
-      <div className='flex mt-[3vh] gap-[8vh] flex-wrap'>
+      <div className='flex mt-[3vh] mb-[3vh] gap-[8vh] w-full flex-col'>
         <h2 className=''>Your Fevorite Cast</h2>
-        <div className='flex gap-[3vw] '>
-          {dummyCastsData.slice(0, 6).map((item,index) => (
+        <div className='flex gap-[3vw] flex-wrap justify-evenly'>
+          {dummyCastsData.slice(start, end).map((item, index) => (
             <CastImage index={index} url={item.profile_path} name={item.name} />
           ))}
         </div>
       </div>
-      <div className='bg-primary w-full h-[15vh] rounded-[12px] opacity-[10%] border-primary'>
 
+      <div className='flex-wrap bg-primary/15 w-full h-[25vh] rounded-[12px} border px-[3vw] border-primary py-2 flex'>
+        <h2>Choose Date</h2>
+        <div className='flex items-center  justify-between gap-[2vh] flex-wrap'>
+          <div className='flex justify-around items-center gap-[1vw] flex-wrap'>
+            <FaAngleDoubleLeft className='text-primary' />
+            <div className='flex items-center justify-center  border border-primary-dull w-[45px] h-[45px] rounded-[12px]'>
+              <div className='flex flex-col items-center justify-center'>
+                <p className='text-[15px]' >Tue</p>
+                <p className='text-[15px]'>15</p>
+              </div>
+            </div>
+            <div className='flex items-center justify-center  border border-primary-dull w-[45px] h-[45px] rounded-[12px]'>
+              <div className='flex flex-col items-center justify-center'>
+                <p className='text-[15px]' >Tue</p>
+                <p className='text-[15px]'>15</p>
+              </div>
+            </div>
+            <div className='flex items-center justify-center  border border-primary-dull w-[45px] h-[45px] rounded-[12px]'>
+              <div className='flex flex-col items-center justify-center'>
+                <p className='text-[15px]' >Tue</p>
+                <p className='text-[15px]'>15</p>
+              </div>
+            </div>
+            <FaAngleDoubleRight className='text-primary' />
+          </div>
+          <button className='w-[6rem] bg-primary rounded-full p-1.5 cursor-pointer'>Book Now</button>
+        </div>
+      </div>
+      <div className=' mt-[3vh] mb-[3vh] flex flex-col gap-[3vh]'>
+        <div className='flex justify-between items-center'>
+          <h2>You may also like</h2>
+          <div onClick={()=>navigate('/movies')} className='flex justify-between items-center gap-1 font-extralight cursor-pointer'>
+            <p>see more</p>
+            <FaArrowRight className='font-extralight text-primary'/>
+          </div>
+        </div>
+        <div className='flex flex-wrap md:gap-[2vw] gap-[2vh]'>
+          {dummyShowsData.slice(0,4).map((item)=>(
+            <MovieCard movie={item}/>
+          ))}
+        </div>
       </div>
     </div>
   ) : <h2>Loading...</h2>
