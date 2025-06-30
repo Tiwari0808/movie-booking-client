@@ -14,7 +14,7 @@ const FeaturedSection = () => {
         //  transition={{duration:0.8}}
 
 
-         className='flex flex-col px-[5vw] sm:px-[6vw] md:px-[6vw] lg:px-[10vw] overflow-hidden mt-[3vh] '>
+         className='flex flex-col px-[5vw] sm:px-[6vw] md:px-[6vw] lg:px-[10vw] overflow-hidden mt-[3vh]'>
             <motion.div className='flex items-center justify-between'>
                 <h5 className='text-[#D1D5DC] font-bold text-[1.3rem] md:text-[1.8rem]'>Now Showing</h5>
                 <motion.div className='flex items-center text-sm gap-2'>

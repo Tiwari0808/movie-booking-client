@@ -2,13 +2,15 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { dummyTrailers } from '../assets/assets';
 import { FaPlayCircle } from 'react-icons/fa';
+import BlurCircle from './BlurCircle';
 
 const TrailerSection = () => {
   const [currentTrailer, setCurrentTrailer] = useState(dummyTrailers[0]);
 
   return (
-    <div className='px-[5vw]  md:px-[10vw] mt-10'>
+    <div className='px-[5vw]  md:px-[10vw] mt-10 py-[10vh] relative'>
       <h2 className='font-bold text-[20px] sm:text-[16px]'>Trailers</h2>
+      <BlurCircle top='30px' right='180px'/>
 
       <div className='mt-10 w-full max-w-[700px] mx-auto flex items-center justify-center'>
         <ReactPlayer

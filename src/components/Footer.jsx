@@ -28,8 +28,8 @@ const Footer = () => {
         <div className='hidden md:flex flex-col items-center md:items-start text-center md:text-left gap-2'>
           <h3 className='font-semibold'>Get in touch</h3>
           <div className='flex flex-col gap-2 text-[14px] text-[#FFFFFFCC] opacity-80'>
-            <p>+91 93597******</p>
-            <a href="">abc@gmail.com</a>
+            <p>+91 935970100</p>
+            <a href="">divyanshutiwari173@gmail.com</a>
           </div>
         </div>
       </div>
