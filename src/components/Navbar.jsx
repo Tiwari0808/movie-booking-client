@@ -20,7 +20,8 @@ const Navbar = () => {
                 <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/'>Home</Link>
                 <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/movies'>Movies</Link>
                 <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/'>Theaters</Link>
-                <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/'>Releases</Link>
+                <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/trailers'>Trailers</Link>
+                {/* <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/'>Releases</Link> */}
                 <Link onClick={() => { setIsOpen(!isOpen); scrollTo(0, 0) }} to='/favorites'>Favorites</Link>
             </div>
             <div className='flex items-center gap-8 '>

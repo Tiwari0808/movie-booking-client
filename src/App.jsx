@@ -8,6 +8,7 @@ import MyBookings from './pages/MyBookings'
 import Footer from './components/Footer'
 import { Toaster } from 'react-hot-toast'
 import Favorite from './pages/Favorite'
+import TrailerSection from './components/TrailerSection'
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/movies/:id/:date' element={<SeatLayout />} />
         <Route path='/my-bookings' element={<MyBookings />} />
         <Route path='/favorites' element={<Favorite/>} />
+        <Route path='/trailers' element={<TrailerSection/>} />
       </Routes>
       {!isAdminRoute && <Footer/>}
     </>
