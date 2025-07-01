@@ -8,6 +8,7 @@ import getHours from '../lib/getHours';
 import CastImage from '../components/CastImage';
 import MovieCard from '../components/MovieCard';
 import BookingUi from '../components/BookingUi';
+import Spinner from '../components/Spinner'
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -27,7 +28,7 @@ const MovieDetails = () => {
 
       {/* movie details div */}
 
-      <div className='flex gap-[4vh] flex-col md:flex-row '>
+      <div className='flex gap-[4vh] flex-col md:flex-row items-center '>
         <img className='rounded-[18px] w-[278px] h-[417px]' src={show.movie.poster_path} alt="Movie poster" />
         <div className='flex flex-col gap-[2.5vh]'>
           <BlurCircle />
@@ -75,7 +76,7 @@ const MovieDetails = () => {
 
       {/* see more div */}
 
-      <div className=' mt-[3vh] mb-[3vh] flex flex-col gap-[3vh]'>
+      <div className=' py-3 flex flex-col gap-5'>
         <div className='flex justify-between'>
           <h2>You may also like</h2>
           <div onClick={() => (navigate('/movies'), scrollTo({ top: 0, behavior: 'smooth' }))} className='flex justify-between items-center gap-1 font-extralight cursor-pointer'>
@@ -83,16 +84,19 @@ const MovieDetails = () => {
             <FaArrowRight className='font-extralight text-primary' />
           </div>
         </div>
-        <div className='flex flex-wrap md:gap-[2vw] gap-[2vh]'>
+        <div className='flex flex-col items-center gap-4 md:flex-row flex-wrap'>
           {dummyShowsData.slice(0, 4).map((item) => (
             <MovieCard movie={item} />
           ))}
         </div>
-        <button onClick={() => (navigate('/movies'))} className='w-[6rem] md:8rem bg-primary rounded-[6px] p-1.5 cursor-pointer'>Show More</button>
+        <div className='flex justify-center'>
+          <button onClick={() => ((navigate('/movies')), scrollTo(0, 0))} className='w-[6rem] md:8rem bg-primary rounded-[6px] p-1.5 cursor-pointer text-center flex justify-center'>Show More</button>
+        </div>
       </div>
 
     </div>
-  ) : <h2>Loading...</h2>
+  ) :
+    <Spinner/>
 }
 
 export default MovieDetails
