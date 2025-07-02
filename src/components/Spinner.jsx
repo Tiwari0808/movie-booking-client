@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Spinner = () => {
   return (
      <div  className='py-[27vh] md:px-[15vw] flex justify-center'>
