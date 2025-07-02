@@ -60,7 +60,8 @@ const SeatLayout = () => {
     if(selectedSeats.length < 1){
       return toast.error('Please select the seat')
     }
-    navigate('/myBookings')
+    navigate('/myBookings');
+    scrollTo(0,0)
   }
 
   const handleSeatClick = (seatId) => {
@@ -78,7 +79,7 @@ const SeatLayout = () => {
   }, []);
 
   return show ? (
-    <div className="px-4 py-10 md:px-12 lg:px-[112px] md:py-20 flex flex-col lg:flex-row gap-8 md:gap-10">
+    <div className="px-4 py-[15vh] md:px-12 lg:px-[112px] md:py-20 flex flex-col lg:flex-row gap-8 md:gap-10">
       {/* LEFT: Show Times */}
       <div className='flex flex-col justify-center'>
         <div className="px-2 py-2 gap-2 w-full lg:w-[222px] max-h-[240px] bg-primary/15 rounded-[12px] border border-primary flex flex-col justify-center">
@@ -88,7 +89,7 @@ const SeatLayout = () => {
           {show.dateTime[date]?.map((item, idx) => (
             <div
               key={idx}
-              onClick={() => setSelectedTime(item)}
+              onClick={() => (setSelectedTime(item),toast.success('Time Selected'))}
               className={`flex gap-1 items-center ${selectedTime === item ? 'bg-primary' : ''} hover:bg-primary-dull rounded-r-[8px] p-1 w-[70%] md:w-[50%] cursor-pointer mx-4`}
             >
               <CiClock1 />
@@ -100,7 +101,7 @@ const SeatLayout = () => {
 
 
       {/* MIDDLE: Screen + Seats */}
-      <div className="w-full flex flex-col gap-6 justify-center items-center">
+      <div className="w-full flex flex-col gap-[1vh] h-screen items-center">
         <div className="flex justify-center w-full">
           <h2 className="text-xl md:text-2xl font-semibold">Select Your Seat</h2>
         </div>
