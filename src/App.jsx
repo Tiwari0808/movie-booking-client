@@ -9,12 +9,18 @@ import Footer from './components/Footer'
 import { Toaster } from 'react-hot-toast'
 import Favorite from './pages/Favorite'
 import TrailerSection from './components/TrailerSection'
+import Layout from './pages/admin/Layout'
+import Dashboard from './pages/admin/Dashboard'
+import Addshows from './pages/admin/Addshows'
+import ListBookings from './pages/admin/ListBookings'
+import ListShows from './pages/admin/ListShows'
+import ErrorPage from './pages/ErrorPage'
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
   return (
     <>
-      <Toaster/>
+      <Toaster />
       {!isAdminRoute && <Navbar />}
       <Routes>
         <Route path='/' element={<Home />} />
@@ -22,10 +28,17 @@ const App = () => {
         <Route path='/movies/:id' element={<MovieDetails />} />
         <Route path='/movies/:id/:date' element={<SeatLayout />} />
         <Route path='/myBookings' element={<MyBookings />} />
-        <Route path='/favorites' element={<Favorite/>} />
-        <Route path='/trailers' element={<TrailerSection/>} />
+        <Route path='/favorites' element={<Favorite />} />
+        <Route path='/trailers' element={<TrailerSection />} />
+        <Route path='admin/*' element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path='addShows' element={<Addshows />} />
+          <Route path='listBookings' element={<ListBookings />} />
+          <Route path='listShows' element={<ListShows />} />
+        </Route>
+        <Route path='*' element={<ErrorPage/>}/>
       </Routes>
-      {!isAdminRoute && <Footer/>}
+      {!isAdminRoute && <Footer />}
     </>
   )
 }

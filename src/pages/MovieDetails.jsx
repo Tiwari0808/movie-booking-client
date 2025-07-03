@@ -47,7 +47,7 @@ const MovieDetails = () => {
               <FaPlay />
               Watch Trailer
             </button>
-            <a href='#bookingUI' onClick={() => scroll({ behavior: 'smooth' })} className='flex items-center bg-primary px-[1.5vw] py-[1.8vh] gap-[1vw] rounded-[6px] cursor-pointer'>
+            <a href='#bookingUI' className='flex items-center bg-primary px-[1.5vw] py-[1.8vh] gap-[1vw] rounded-[6px] cursor-pointer'>
               Buy Tickets
             </a>
             <div >
