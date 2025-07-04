@@ -28,26 +28,26 @@ const ListShows = () => {
   return !loading ? (
     <div className='md:px-[6vw] md:py-[4vh] px-3 py-3 flex flex-col gap-6'>
       <div>
-        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List<span className='text-primary'>Shows</span></h2>
+        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List<span className='text-primary'>Bookings</span></h2>
       </div>
       <div>
         <div >
           <table className='w-full border-collapse bg-primary/25 border border-primary'>
             <thead className="bg-primary/40 text-white">
               <tr>
-                <th className="px-4 py-2 text-left">Movie Name</th>
-                <th className="px-4 py-2 text-left">Date</th>
-                <th className="px-4 py-2 text-left">Total Booking</th>
-                <th className="px-4 py-2 text-left">Earning</th>
+                <th className=" py-[1vh] text-center text-[0.8rem]">Movie Name</th>
+                <th className=" py-[1vh] text-center text-[0.8rem]">Date</th>
+                <th className=" py-[1vh] text-center text-[0.8rem]">Total Booking</th>
+                <th className=" py-[1vh] text-center text-[0.8rem]">Earning</th>
               </tr>
             </thead>
             <tbody>
               {showsData.map((item, index) => (
-                <tr className="border-b border-primary/40">
-                  <td className="px-4 py-2">{item.movie.title}</td>
-                  <td className="px-4 py-2">{dateFormat(item.showDateTime)}</td>
-                  <td className="px-4 py-2">{Object.keys(item.occupiedSeats).length}</td>
-                  <td className="px-4 py-2">{`₹${Object.keys(item.occupiedSeats).length * item.showPrice}`}</td>
+                <tr key={index} className="border-b border-primary/40">
+                  <td className="py-[1vh] text-center text-[0.6rem]">{item.movie.title}</td>
+                  <td className="py-[1vh] text-center text-[0.6rem]">{dateFormat(item.showDateTime)}</td>
+                  <td className="py-[1vh] text-center text-[0.6rem]">{Object.keys(item.occupiedSeats).length}</td>
+                  <td className="py-[1vh] text-center text-[0.6rem]">{`₹${Object.keys(item.occupiedSeats).length * item.showPrice}`}</td>
                 </tr>
               ))}
             </tbody>

@@ -55,7 +55,7 @@ const AdminSidebar = () => {
           <span>
             <RiReservedFill />
           </span>
-         <p className="hidden md:flex">Booking Lists</p>
+         <p className="hidden md:flex">List Bookings</p>
         </NavLink>
       </nav>
     </div>
