@@ -7,7 +7,7 @@ const CalanderDate = ({ date, selectedDate, setSelectedDate }) => {
         selectedDate === date ? 'bg-primary text-white' : ''
       } border-primary-dull hover:bg-primary-dull w-[45px] h-[45px] rounded-[12px]`}
     >
-      <div className='flex flex-col items-center justify-center'>
+      <div onClick={() => setSelectedDate(date)}  className='flex flex-col items-center justify-center'>
         <p className='text-[15px]'>{new Date(date).toLocaleDateString('en-US',{month:'short'})}</p>
         <p className='text-[15px]'>{new Date(date).getDate()}</p>
       </div>
@@ -15,4 +15,4 @@ const CalanderDate = ({ date, selectedDate, setSelectedDate }) => {
   )
 }
 
-export default CalanderDate
+export default CalanderDate;

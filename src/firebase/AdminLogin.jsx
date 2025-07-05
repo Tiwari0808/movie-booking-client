@@ -26,7 +26,9 @@ const AdminLogin = () => {
       navigate('/admin/dashboard')
       toast.success('Logged in successfully!');
     } catch (error) {
-      toast.error('Login failed:' || error.message);
+      setEmail('');
+      setPassword('')
+      return toast.error(error.message);
     }
   };
 
@@ -53,7 +55,7 @@ const AdminLogin = () => {
               className="p-2 rounded border w-[80%]"
             />
             <button type="submit" className="bg-primary text-white py-2 rounded w-[50%] cursor-pointer hover:bg-primary-dull">Login</button>
-            <p className='text-[12px] cursor-pointer hover:text-primary'>Do not have Account? Signup</p>
+            <p className='text-[12px] text-center'>Please use <span className='text-primary'>divyanshu@dev.com</span> and <br /> Password <span className='text-primary'>123456</span> to log in</p>
           </form>
         </div>
       </div>

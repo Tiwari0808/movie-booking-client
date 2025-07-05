@@ -30,7 +30,7 @@ const FeaturedSection = () => {
             </motion.div>
 
             <motion.div className='mt-10 flex justify-center'>
-                <button onClick={()=>(navigate('/movies'))} className='w-[6rem] md:8rem bg-primary rounded-[6px] p-1.5 cursor-pointer'>Show More</button>
+                <button onClick={()=>(navigate('/movies'),scrollTo(0,0))} className='w-[6rem] md:8rem bg-primary rounded-[6px] p-1.5 cursor-pointer'>Show More</button>
             </motion.div>
 
         </motion.div>

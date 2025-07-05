@@ -16,6 +16,8 @@ import ListBookings from './pages/admin/ListBookings'
 import ListShows from './pages/admin/ListShows'
 import ErrorPage from './pages/ErrorPage'
 import AdminLogin from './firebase/AdminLogin'
+import ProtectedRoutes from './components/admin/ProtectedRoutes'
+import HeroSection from './components/HeroSection'
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
@@ -31,12 +33,13 @@ const App = () => {
         <Route path='/myBookings' element={<MyBookings />} />
         <Route path='/favorites' element={<Favorite />} />
         <Route path='/trailers' element={<TrailerSection />} />
+        <Route path='/hero' element={<HeroSection />} />
         <Route path='admin/*' element={<Layout />}>
           <Route index element={<AdminLogin />} />
-          <Route path='dashboard' element={<Dashboard />} />
-          <Route path='addShows' element={<Addshows />} />
-          <Route path='listBookings' element={<ListBookings />} />
-          <Route path='listShows' element={<ListShows />} />
+          <Route path='dashboard' element={<ProtectedRoutes><Dashboard /></ProtectedRoutes>} />
+          <Route path='addShows' element={<ProtectedRoutes><Addshows /></ProtectedRoutes>} />
+          <Route path='listBookings' element={<ProtectedRoutes><ListBookings /></ProtectedRoutes>} />
+          <Route path='listShows' element={<ProtectedRoutes><ListShows /></ProtectedRoutes>} />
         </Route>
         <Route path='*' element={<ErrorPage />} />
       </Routes>

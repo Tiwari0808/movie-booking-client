@@ -3,11 +3,13 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { MdAddCard } from "react-icons/md";
 import { FaListAlt } from "react-icons/fa";
 import { RiReservedFill } from "react-icons/ri";
+import { useAuth } from "../../context/AuthContext";
 
 const AdminSidebar = () => {
+  const { user } = useAuth();
   return (
     <div>
-      <nav className="flex flex-col">
+      <nav className="flex flex-col fixed">
         <NavLink
           end
           className={({ isActive }) =>
@@ -15,7 +17,7 @@ const AdminSidebar = () => {
               ? `bg-primary/20 text-primary px-3 py-3 text-[16px] flex items-center gap-2`
               : "px-3 py-3 text-[16px] flex items-center gap-2"
           }
-          to="/admin">
+          to="/admin/dashboard">
           <span>
             <LuLayoutDashboard />
           </span>
@@ -55,7 +57,7 @@ const AdminSidebar = () => {
           <span>
             <RiReservedFill />
           </span>
-         <p className="hidden md:flex">List Bookings</p>
+          <p className="hidden md:flex">List Bookings</p>
         </NavLink>
       </nav>
     </div>

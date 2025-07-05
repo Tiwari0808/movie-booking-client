@@ -21,7 +21,7 @@ const BookingUi = ({ show, id }) => {
     }
 
     return (
-        <div id='bookingUI' className='flex flex-wrap bg-primary/15 w-full h-[25vh] rounded-[12px] border px-[3vw] border-primary py-2'>
+        <div id='bookingUI' className='flex flex-wrap bg-primary/15 w-full h-[35vh] md:h-[25vh] rounded-[12px] border px-[3vw] border-primary py-2'>
             <h2 className='text-lg font-semibold'>Choose Date</h2>
             <div className='flex items-center justify-between gap-[2vh] flex-wrap'>
                 <div className='flex flex-wrap gap-2 items-center'>

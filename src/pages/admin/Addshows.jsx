@@ -70,15 +70,15 @@ const Addshows = () => {
 
   return !isLoading ? (
     <div className='md:px-[6vw] md:py-[4vh] px-3 py-3 flex flex-col gap-6'>
-      <div>
+      <div className=''>
         <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>Add <span className='text-primary'>Shows</span></h2>
       </div>
-      <p className='font-bold text-[#FFFFFF]'>Now Playing Movies</p>
+      <p className='font-bold text-[#FFFFFF]'>Movies You Can List</p>
       <div className='flex flex-wrap justify-evenly gap-5'>
-        {shows.map((item, index) => (
+        {shows.slice(0,4).map((item, index) => (
           <div key={index} className='flex flex-col gap-6'>
             <div className='flex flex-col'>
-              <div onClick={() => setSelectedMovieId(selectedMovieId === item.id ? null : item.id)} className='max-w-[202px] max-h-[300px] relative'>
+              <div onClick={() => (setSelectedMovieId(selectedMovieId === item.id ? null : item.id),toast.success(`Movie ${item.title} selected`))} className='max-w-[202px] max-h-[300px] relative'>
                 {selectedMovieId === item.id && <FaCheckSquare className='absolute top-3 right-5 text-primary' />}
                 <img src={item.poster_path} alt="" />
                 <div className='bg-black flex justify-between px-2'>
