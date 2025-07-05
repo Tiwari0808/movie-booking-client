@@ -15,6 +15,7 @@ import Addshows from './pages/admin/Addshows'
 import ListBookings from './pages/admin/ListBookings'
 import ListShows from './pages/admin/ListShows'
 import ErrorPage from './pages/ErrorPage'
+import AdminLogin from './firebase/AdminLogin'
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
@@ -31,12 +32,13 @@ const App = () => {
         <Route path='/favorites' element={<Favorite />} />
         <Route path='/trailers' element={<TrailerSection />} />
         <Route path='admin/*' element={<Layout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<AdminLogin />} />
+          <Route path='dashboard' element={<Dashboard />} />
           <Route path='addShows' element={<Addshows />} />
           <Route path='listBookings' element={<ListBookings />} />
           <Route path='listShows' element={<ListShows />} />
         </Route>
-        <Route path='*' element={<ErrorPage/>}/>
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
       {!isAdminRoute && <Footer />}
     </>
