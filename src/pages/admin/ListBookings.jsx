@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import { collection, getDocs } from 'firebase/firestore';
 import { dummyBookingData } from '../../assets/assets';
 import Spinner from '../../components/Spinner';
 import dateFormat from '../../lib/dateFormat';
+import { useEffect, useState } from 'react'
+import { db } from '../../firebase/firebaseConfig';
 
 const ListBookings = () => {
   const [showsData, setshowsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const getData = async () => {
+    const snapshot = getDocs(collection(db,'shows'));
+    const shows = (await snapshot).docs.map((doc)=>({
+      id:movie.id,
+      ...doc.data()
+    }))
     setshowsData(dummyBookingData);
     setIsLoading(false)
   }
@@ -16,7 +23,7 @@ const ListBookings = () => {
   return !isLoading ? (
     <div className='md:px-[6vw] md:py-[4vh] px-3 py-3 flex flex-col gap-6'>
       <div>
-        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List<span className='text-primary'>Shows</span></h2>
+        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List<span className='text-primary'>Bookings</span></h2>
       </div>
       <div>
         <div >

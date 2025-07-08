@@ -6,11 +6,14 @@ import Spinner from '../../components/Spinner';
 import { kCounter } from '../../lib/kCounter';
 import { RxCross1 } from "react-icons/rx";
 import toast from 'react-hot-toast';
+import { db } from '../../firebase/firebaseConfig';
+import { addDoc, collection, getDocs } from 'firebase/firestore';
 
 
 
 const Addshows = () => {
   const [shows, setShows] = useState(null);
+  const [movieTitle,setMovieTitle] = useState(null);
   const [showPrice, setShowPrice] = useState('');
   const [selectedDateTime, setSelectedDateTime] = useState([]);
   const [selectDateTime, setSelectDateTime] = useState('');
@@ -18,8 +21,17 @@ const Addshows = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
-    setShows(dummyShowsData);
-    setIsLoading(false)
+    try {
+      const snapshot = await getDocs(collection(db, 'movies'));
+      const movies = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setShows(movies);
+      setIsLoading(false)
+    } catch (error) {
+      return toast.error(error.message || 'Failed to fetch data');
+    }
   }
 
   const dateBtnHandler = () => {
@@ -34,10 +46,10 @@ const Addshows = () => {
     }
     setSelectedDateTime([...selectedDateTime, selectDateTime]);
     setSelectDateTime('');
-    return toast.success('Date Time added successfully');
+    return toast.success('Date Time selected successfully');
   }
 
-  const addShowBtnHandler = () => {
+  const addShowBtnHandler = async () => {
     if (!showPrice) {
       return toast.error('Please Show Price');
     }
@@ -47,16 +59,24 @@ const Addshows = () => {
     if (selectedDateTime.length < 1) {
       return toast.error('Select Show Date and Time')
     }
+
     const addShowData = {
       showPrice: showPrice,
       movieId: selectedMovieId,
+      movieTitle:movieTitle,
       selectedDateTime: selectedDateTime,
     }
-    console.log(addShowData);
-    setShowPrice('');
-    setSelectDateTime('');
-    setSelectedMovieId(null);
-    return toast.success('Show Added Successfully')
+
+    try {
+      await addDoc(collection(db, 'shows'), addShowData);
+      setShowPrice('');
+      setSelectDateTime('');
+      setSelectedMovieId(null);
+      setSelectedDateTime([])
+      return toast.success('Show added to backend successfully')
+    } catch (error) {
+      toast.error(error.message || 'Failed to add the Show')
+    }
 
   }
 
@@ -75,18 +95,18 @@ const Addshows = () => {
       </div>
       <p className='font-bold text-[#FFFFFF]'>Movies You Can List</p>
       <div className='flex flex-wrap justify-evenly gap-5'>
-        {shows.slice(0,4).map((item, index) => (
+        {shows.map((item, index) => (
           <div key={index} className='flex flex-col gap-6'>
             <div className='flex flex-col'>
-              <div onClick={() => (setSelectedMovieId(selectedMovieId === item.id ? null : item.id),toast.success(`Movie ${item.title} selected`))} className='max-w-[202px] max-h-[300px] relative'>
+              <div onClick={() => (setSelectedMovieId(selectedMovieId === item.id ? null : item.id),setMovieTitle(item.title) ,toast.success(`Movie ${item.title} selected`))} className='max-w-[202px] max-h-[300px] relative'>
                 {selectedMovieId === item.id && <FaCheckSquare className='absolute top-3 right-5 text-primary' />}
-                <img src={item.poster_path} alt="" />
+                <img className='cursor-pointer' src={item.poster_path} alt="" />
                 <div className='bg-black flex justify-between px-2'>
                   <div className='flex items-center gap-2'>
                     <FaStar className='text-primary w-[18px] h-[18px]' />
                     <p>{`${item.vote_average.toFixed(1)}/10`}</p>
                   </div>
-                  <p>{`${kCounter(item.vote_count.toFixed(1))}.k Votes`}</p>
+                  <p>{`${kCounter(item.vote_count)} k Votes`}</p>
                 </div>
               </div>
             </div>
@@ -114,15 +134,16 @@ const Addshows = () => {
         <div className='flex flex-col gap-2'>
           <p>Selected Date and Time</p>
           {selectedDateTime.map((dateTime, i) => {
-            const [date,time] = dateTime.split('T');
-           return (<div key={i} className='flex flex-col gap-2'>
+            const [date, time] = dateTime.split('T');
+            return (<div key={i} className='flex flex-col gap-2'>
               <div className='border border-primary rounded-[6px] w-auto  flex items-center px-2 gap-2'>
                 <p>{`Date : ${date},`}</p>
                 <p>{`Time : ${time}`}</p>
                 <RxCross1 onClick={() => clearDateTimeHandler(i)} className='text-primary cursor-pointer' />
               </div>
             </div>
-          )}
+            )
+          }
           )}
         </div>
         <div>

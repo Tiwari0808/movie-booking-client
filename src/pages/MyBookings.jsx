@@ -3,6 +3,7 @@ import { dummyBookingData } from '../assets/assets';
 import Spinner from '../components/Spinner';
 import getHours from '../lib/getHours';
 import dateFormat from '../lib/dateFormat';
+import toast from 'react-hot-toast';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -11,6 +12,10 @@ const MyBookings = () => {
     setBookings(dummyBookingData);
     bookings && setIsLoading(false)
   }
+
+ const payNowHandler = ()=>{
+  return toast.success('Payment Successful');
+ }
 
   useEffect(() => {
     getBookings()
@@ -30,7 +35,7 @@ const MyBookings = () => {
           <div className='flex flex-col justify-between items-center'>
             <div className='flex gap-2 flex-col items-center md:flex-row justify-between'>
               <p className='font-bold md:text-[22px] text-[#EBEBEB] '>{`₹${item.show.showPrice}`}</p>
-              {!item.isPaid && <button className='text-[1rem] bg-primary justify-between px-[1vw] py-[0.5vh] rounded-full cursor-pointer'>Pay Now</button>}
+              {!item.isPaid && <button onClick={()=>payNowHandler()} className='text-[1rem] bg-primary justify-between px-[1vw] py-[0.5vh] rounded-full cursor-pointer'>Pay Now</button>}
             </div>
             <p className='text-center text-[12px]'>{`Total Tickets : ${item.bookedSeats.length}`}</p>
             <p className='text-center text-[12px]'>{`Seat Number : ${item.bookedSeats.join(", ")}`}</p>

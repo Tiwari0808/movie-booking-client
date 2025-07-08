@@ -20,7 +20,7 @@ import ProtectedRoutes from './components/admin/ProtectedRoutes'
 import HeroSection from './components/HeroSection'
 
 const App = () => {
-  const isAdminRoute = useLocation().pathname.startsWith('/admin')
+  const isAdminRoute = useLocation().pathname.startsWith('/admin');
   return (
     <>
       <Toaster />

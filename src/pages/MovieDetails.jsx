@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { dummyDateTimeData, dummyShowsData } from '../assets/assets';
+import { dummyCastsData, dummyDateTimeData, dummyShowsData } from '../assets/assets';
 import { FaArrowRight, FaPlay, FaStar } from 'react-icons/fa';
 import { CiHeart } from 'react-icons/ci';
 import BlurCircle from '../components/BlurCircle';
@@ -9,14 +9,32 @@ import CastImage from '../components/CastImage';
 import MovieCard from '../components/MovieCard';
 import BookingUi from '../components/BookingUi';
 import Spinner from '../components/Spinner'
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/firebaseConfig';
+import toast from 'react-hot-toast';
 
 const MovieDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate()
   const [show, setShow] = useState(null);
+  const [allMovies,setAllMovies] = useState([]);
   const getDetails = async () => {
-    const show = dummyShowsData.find((show) => show._id === id);
-    setShow({ movie: show, dateTime: dummyDateTimeData });
+    try {
+      const snapshot = await getDocs(collection(db, 'movies'));
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }))
+      console.log(data);
+      const show = data.find((show) => show.id === id);
+      console.log(show);
+      
+      setShow({ movie: show, dateTime: dummyDateTimeData });
+      setAllMovies(data);
+      toast.success('data fetched successfully');
+    } catch (error) {
+       toast.error(error.message);
+    }
   }
 
   useEffect(() => {
@@ -36,11 +54,11 @@ const MovieDetails = () => {
           <h2 className='font-bold text-[36px] leading-[117%]'>{show.movie.title}</h2>
           <div className='flex gap-[0.5vw] items-center'>
             <FaStar className='text-primary' />
-            <p className='font-semibold text-[#D1D5DC] '>{show.movie.vote_average.toFixed(2)} IMDb</p>
+            <p className='font-semibold text-[#D1D5DC] '>{show.movie.vote_average} IMDb</p>
           </div>
           <p className='max-w-[599px] leading-[120%] align-middle text-[#99A1AF] text-[14px]'>{show.movie.overview}</p>
           <div className='max-w-[342px]'>
-            <p className='text-[16px] text-[#D1D5DC] '>{`${getHours(show.movie.runtime)} • ${show.movie.genres.slice(0, 2).map((item) => item.name).join(" | ")} • ${show.movie.release_date.split(', ')}`}</p>
+            <p className='text-[16px] text-[#D1D5DC] '>{`${getHours(show.movie.runtime)} • ${''} • ${''}`}</p>
           </div>
           <div className='flex gap-[1vw] items-center'>
             <button onClick={() => navigate('/trailers')} className='flex items-center bg-[#1E2939] px-[1.5vw] py-[1.8vh] gap-[1vw] rounded-[6px] cursor-pointer'>
@@ -62,7 +80,7 @@ const MovieDetails = () => {
       <div className='flex mt-[3vh] mb-[3vh] gap-[8vh] w-full flex-col'>
         <h2 className=''>Your Fevorite Cast</h2>
         <div className='flex gap-[3vw] flex-wrap justify-evenly'>
-          {show.movie.casts.slice(0, 6).map((item, index) => (
+          {dummyCastsData.slice(5,9).map((item, index) => (
             <div key={index}>
               <CastImage url={item.profile_path} name={item.name} />
             </div>
@@ -85,8 +103,8 @@ const MovieDetails = () => {
           </div>
         </div>
         <div className='flex flex-col items-center gap-4 md:flex-row flex-wrap'>
-          {dummyShowsData.slice(0, 4).map((item) => (
-            <MovieCard movie={item} />
+          {allMovies.map((item) => (
+            <MovieCard key={item.id} movie={item} />
           ))}
         </div>
         <div className='flex justify-center'>
@@ -96,7 +114,7 @@ const MovieDetails = () => {
 
     </div>
   ) :
-    <Spinner/>
+    <Spinner />
 }
 
-export default MovieDetails
+export default MovieDetails;

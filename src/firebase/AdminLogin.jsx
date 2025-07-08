@@ -21,8 +21,7 @@ const AdminLogin = () => {
         return toast.error('Please Enter Password')
       }
       const result = await signInWithEmailAndPassword(auth, email, password);
-      setUser(result.user)
-      console.log(user);
+      setUser(result.user);
       navigate('/admin/dashboard')
       toast.success('Logged in successfully!');
     } catch (error) {
