@@ -4,7 +4,7 @@ import CalanderDate from './CalanderDate'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 
-const BookingUi = ({ show, id }) => {
+const BookingUi = ({ movie, id, listedDateTime }) => {
     const [selectedDate, setSelectedDate] = useState(null);
     const navigate = useNavigate();
 
@@ -16,20 +16,23 @@ const BookingUi = ({ show, id }) => {
         else {
             toast.success(`Booking for ${selectedDate} confirmed!`);
             navigate(`/movies/${id}/${selectedDate}`);
-            scrollTo({top:0,behavior:'smooth'})
+            scrollTo({ top: 0, behavior: 'smooth' })
         }
     }
 
     return (
-        <div id='bookingUI' className='flex flex-wrap bg-primary/15 w-full h-[35vh] md:h-[25vh] rounded-[12px] border px-[3vw] border-primary py-2'>
-            <h2 className='text-lg font-semibold'>Choose Date</h2>
-            <div className='flex items-center justify-between gap-[2vh] flex-wrap'>
+        <div id='bookingUI' className='flex flex-col flex-wrap gap-3 bg-primary/15 w-full  rounded-[12px] border px-[3vw] border-primary py-2'>
+            <div className='flex items-center gap-2'>
+               <h2 className='font-semibold'>{`Choose Date for`}</h2>
+               <p className='text-[12px] text-primary'>{movie.title}</p>
+            </div>
+            {listedDateTime ? (<div className='flex items-center justify-between gap-[2vh] flex-wrap'>
                 <div className='flex flex-wrap gap-2 items-center'>
                     <FaAngleDoubleLeft className='text-primary cursor-pointer' />
-                    {Object.keys(show.dateTime).map((date, idx) => (
+                    {listedDateTime.map((date, idx) => (
                         <CalanderDate
                             key={idx}
-                            date={date}
+                            date={date.split("T")[0]}
                             selectedDate={selectedDate}
                             setSelectedDate={setSelectedDate}
                         />
@@ -38,9 +41,9 @@ const BookingUi = ({ show, id }) => {
                 <button onClick={bookNowHandler} className='w-[6rem] bg-primary rounded-full p-1.5 cursor-pointer'>
                     Book Now
                 </button>
-            </div>
+            </div>) : <div className='text-center'><h2>No shows for this movie</h2></div>}
         </div>
     )
 }
 
-export default BookingUi
+export default BookingUi;

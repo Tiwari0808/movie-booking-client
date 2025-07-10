@@ -1,7 +1,6 @@
 import { FaArrowRight } from 'react-icons/fa'
 import BlurCircle from './BlurCircle'
 import { useNavigate } from 'react-router-dom'
-import { dummyShowsData } from '../assets/assets'
 import MovieCard from './MovieCard'
 import { motion } from "framer-motion";
 import { useEffect, useState } from 'react'
@@ -13,7 +12,7 @@ import toast from 'react-hot-toast'
 
 const FeaturedSection = () => {
     const navigate = useNavigate();
-    const [shows, setShows] = useState([]);
+    const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const getMovies = async () => {
         try {
@@ -22,7 +21,7 @@ const FeaturedSection = () => {
                 id: doc.id,
                 ...doc.data()
             }));
-            setShows(movies);
+            setMovies(movies);
             setIsLoading(false);
             toast.success('Data fetched successfully');
         } catch (error) {
@@ -46,8 +45,8 @@ const FeaturedSection = () => {
                 <BlurCircle top='20' right={20} />
             </motion.div>
             <motion.div className='flex gap-5 flex-wrap justify-center md:justify-between mt-6'>
-                {shows.slice(0, 6).map((show) => (
-                    <MovieCard key={show.id} movie={show} />
+                {movies.slice(0, 6).map((movie) => (
+                    <MovieCard key={movie.id} movie={movie} />
                 ))}
             </motion.div>
 

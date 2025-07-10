@@ -12,53 +12,64 @@ import Spinner from '../components/Spinner'
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/firebaseConfig';
 import toast from 'react-hot-toast';
+import dateFormat from '../lib/dateFormat';
 
 const MovieDetails = () => {
   const { id } = useParams();
+  
   const navigate = useNavigate()
-  const [show, setShow] = useState(null);
+  const [movie, setMovie] = useState(null);
   const [allMovies,setAllMovies] = useState([]);
-  const getDetails = async () => {
+  const [listedDateTime,setListedDateTime] = useState(null);
+
+  const getMovies = async () => {
     try {
       const snapshot = await getDocs(collection(db, 'movies'));
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data()
+      const movies = snapshot.docs.map((movie) => ({
+        id: movie.id,
+        ...movie.data()
       }))
-      console.log(data);
-      const show = data.find((show) => show.id === id);
-      console.log(show);
-      
-      setShow({ movie: show, dateTime: dummyDateTimeData });
-      setAllMovies(data);
+      const movie = movies.find((movie) => movie.id === id);
+      setMovie(movie);
+      setAllMovies(movies);
       toast.success('data fetched successfully');
     } catch (error) {
        toast.error(error.message);
     }
   }
 
+  const getShowDate = async()=>{
+    const snapshot = await getDocs(collection(db,'shows'));
+    const data = snapshot.docs.map((doc)=>
+    ({id:doc.id,...doc.data()})
+    )
+    const show = data.find((item)=>item.movieId === id);
+    setListedDateTime(show.selectedDateTime);
+  }
+  
   useEffect(() => {
-    getDetails()
+    getMovies();
+    getShowDate()
   }, [id])
 
-  return show ? (
+  return movie ? (
     <div className='mt-[27vh] px-[3vw] md:px-[15vw] flex flex-col gap-[7vh]'>
 
       {/* movie details div */}
 
       <div className='flex gap-[4vh] flex-col md:flex-row items-center '>
-        <img className='rounded-[18px] w-[278px] h-[417px]' src={show.movie.poster_path} alt="Movie poster" />
+        <img className='rounded-[18px] w-[278px] h-[417px]' src={movie.poster_path} alt="Movie poster" />
         <div className='flex flex-col gap-[2.5vh]'>
           <BlurCircle />
           <p className='font-bold text-primary'>ENGLISH</p>
-          <h2 className='font-bold text-[36px] leading-[117%]'>{show.movie.title}</h2>
+          <h2 className='font-bold text-[36px] leading-[117%]'>{movie.title}</h2>
           <div className='flex gap-[0.5vw] items-center'>
             <FaStar className='text-primary' />
-            <p className='font-semibold text-[#D1D5DC] '>{show.movie.vote_average} IMDb</p>
+            <p className='font-semibold text-[#D1D5DC] '>{movie.vote_average.toFixed(2)} IMDb</p>
           </div>
-          <p className='max-w-[599px] leading-[120%] align-middle text-[#99A1AF] text-[14px]'>{show.movie.overview}</p>
+          <p className='max-w-[599px] leading-[120%] align-middle text-[#99A1AF] text-[14px]'>{movie.overview}</p>
           <div className='max-w-[342px]'>
-            <p className='text-[16px] text-[#D1D5DC] '>{`${getHours(show.movie.runtime)} • ${''} • ${''}`}</p>
+            <p className='text-[16px] text-[#D1D5DC] '>{`${getHours(movie.runtime)} • ${movie.genres.slice(0,2).map((item)=>item.name)} • ${(movie.release_date)}`}</p>
           </div>
           <div className='flex gap-[1vw] items-center'>
             <button onClick={() => navigate('/trailers')} className='flex items-center bg-[#1E2939] px-[1.5vw] py-[1.8vh] gap-[1vw] rounded-[6px] cursor-pointer'>
@@ -80,7 +91,7 @@ const MovieDetails = () => {
       <div className='flex mt-[3vh] mb-[3vh] gap-[8vh] w-full flex-col'>
         <h2 className=''>Your Fevorite Cast</h2>
         <div className='flex gap-[3vw] flex-wrap justify-evenly'>
-          {dummyCastsData.slice(5,9).map((item, index) => (
+          {dummyCastsData.slice(0,5).map((item, index) => (
             <div key={index}>
               <CastImage url={item.profile_path} name={item.name} />
             </div>
@@ -89,8 +100,9 @@ const MovieDetails = () => {
       </div>
 
       {/* booking ticket ui with date */}
+      
 
-      <BookingUi show={show} id={id} />
+      <BookingUi movie={movie} id={id} listedDateTime={listedDateTime} />
 
       {/* see more div */}
 

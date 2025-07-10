@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { dummyShowsData } from '../assets/assets'
+import { useEffect, useState } from 'react'
 import MovieCard from '../components/MovieCard'
 import BlurCircle from '../components/BlurCircle'
 import { collection, getDocs } from 'firebase/firestore'
@@ -28,7 +27,7 @@ const Movies = () => {
   useEffect(() => {
     getShows()
   }, []);
-  return shows.length > 0 ? (
+  return !isLoading ? (
     <div className='flex flex-col gap-[3vh] px-[4vw] my-[20vh]'>
       <h1 className='font-bold text-[20px] sm:text-[16px]'>Movies</h1>
       <BlurCircle top={0} right={0} />
