@@ -37,7 +37,7 @@ const MovieDetails = () => {
        toast.error(error.message);
     }
   }
-
+    
   const getShowDate = async()=>{
     const snapshot = await getDocs(collection(db,'shows'));
     const data = snapshot.docs.map((doc)=>
@@ -88,7 +88,7 @@ const MovieDetails = () => {
 
       {/* cast data div */}
 
-      <div className='flex mt-[3vh] mb-[3vh] gap-[8vh] w-full flex-col'>
+      <div className='hidden md:flex mt-[3vh] mb-[3vh] gap-[8vh] w-full flex-col'>
         <h2 className=''>Your Fevorite Cast</h2>
         <div className='flex gap-[3vw] flex-wrap justify-evenly'>
           {dummyCastsData.slice(0,5).map((item, index) => (

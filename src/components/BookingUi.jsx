@@ -20,6 +20,8 @@ const BookingUi = ({ movie, id, listedDateTime }) => {
         }
     }
 
+    const uniqueDates = listedDateTime ? Array.from(new Set(listedDateTime.map(dt => dt.split("T")[0]))):[];
+    
     return (
         <div id='bookingUI' className='flex flex-col flex-wrap gap-3 bg-primary/15 w-full  rounded-[12px] border px-[3vw] border-primary py-2'>
             <div className='flex items-center gap-2'>
@@ -29,7 +31,7 @@ const BookingUi = ({ movie, id, listedDateTime }) => {
             {listedDateTime ? (<div className='flex items-center justify-between gap-[2vh] flex-wrap'>
                 <div className='flex flex-wrap gap-2 items-center'>
                     <FaAngleDoubleLeft className='text-primary cursor-pointer' />
-                    {listedDateTime.map((date, idx) => (
+                    {uniqueDates.map((date, idx) => (
                         <CalanderDate
                             key={idx}
                             date={date.split("T")[0]}
