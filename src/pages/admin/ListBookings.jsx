@@ -9,12 +9,12 @@ const ListBookings = () => {
   const [showsData, setshowsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const getData = async () => {
-    const snapshot = getDocs(collection(db,'shows'));
-    const shows = (await snapshot).docs.map((doc)=>({
-      id:movie.id,
+    const snapshot =await getDocs(collection(db,'bookings'));
+    const shows = snapshot.docs.map((doc)=>({
+      id:doc.id,
       ...doc.data()
     }))
-    setshowsData(dummyBookingData);
+    setshowsData(shows);
     setIsLoading(false)
   }
   useEffect(() => {
@@ -30,21 +30,22 @@ const ListBookings = () => {
           <table className='w-full border-collapse bg-primary/25 border border-primary'>
             <thead className="bg-primary/40 text-white">
               <tr>
-                <th className=" py-[1vh] text-center text-[0.8rem]">User Name</th>
-                <th className=" py-[1vh] text-center text-[0.8rem]">Movie Name</th>
-                <th className=" py-[1vh] text-center text-[0.8rem]">Show Time</th>
-                <th className=" py-[1vh] text-center text-[0.8rem]">Seats</th>
-                <th className=" py-[1vh] text-center text-[0.8rem]">Amount</th>
+                <th className="font-extralight text-[8px] md:text-[14px]">User Name</th>
+                <th className="font-extralight text-[8px] md:text-[14px]">Movie Name</th>
+                <th className="font-extralight text-[8px] md:text-[14px]">Show Time</th>
+                <th className="font-extralight text-[8px] md:text-[14px]">Seats</th>
+                <th className="font-extralight text-[8px] md:text-[14px]">Amount</th>
               </tr>
             </thead>
             <tbody>
-              {showsData.map((item, index) => (
-                <tr key={index} className="border-b border-primary/40">
-                  <td className="py-[1vh] text-[0.6rem] text-center">{item.user.name}</td>
-                  <td className="py-[1vh] text-[0.6rem] text-center">{item.show.movie.title}</td>
-                  <td className="py-[1vh] text-[0.6rem] text-center">{dateFormat(item.show.showDateTime)}</td>
-                  <td className="py-[1vh] text-[0.6rem] text-center">{`${item.bookedSeats}`}</td>
-                  <td className="py-[1vh] text-[0.6rem] text-center">{`₹${item.amount}`}</td>
+              {showsData.map((item) => (
+                <tr key={item.id} className="border-b border-primary/40">
+                  {console.log(item)}
+                  <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.name}</td>
+                  <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.movieName.slice(0,20)}</td>
+                  <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.selectedTime}</td>
+                  <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.selectedSeats.join(' ,')}</td>
+                  <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.selectedSeats.length*item.showPrice}</td>
                 </tr>
               ))}
             </tbody>

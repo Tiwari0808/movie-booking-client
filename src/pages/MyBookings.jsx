@@ -58,7 +58,7 @@ const payNowHandler = async (booking) => {
   try {
     const bookingRef = doc(db, 'bookings', booking.id);
     await updateDoc(bookingRef, { isPaid: true });
-    toast.success("Payment Successful.");
+    toast.success("Payment Successful.Refresh to update.");
   } catch (error) {
     toast.error("Failed to complete payment or send email.");
   }
