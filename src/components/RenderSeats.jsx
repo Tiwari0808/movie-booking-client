@@ -14,14 +14,14 @@ const RenderSeat = ({ row, count, show , selectedSeats, handleSeatClick,selected
             }}
             key={seatId}
             className={`w-[24px] h-[24px] md:w-[28px] md:h-[28px] border rounded-[4px] flex justify-center items-center
-              ${isBooked ? "bg-gray-500 cursor-not-allowed" : ""}
+              ${isBooked ? "bg-gray-500 cursor-not-allowed border-primary" : ""}
               ${isSelected ? "bg-primary" : ""}
               ${
                 !isBooked && !isSelected
                   ? "hover:bg-primary-dull cursor-pointer"
                   : ""
               }
-              border-primary`}>
+              border-green-500`}>
             <button disabled={isBooked} className={``}>
               <p
                 className={` text-[7px] md:text-[8px] ${

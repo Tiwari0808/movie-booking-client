@@ -43,7 +43,7 @@ const BookingUi = ({ movie, id, listedDateTime }) => {
                 <button onClick={bookNowHandler} className='w-[6rem] bg-primary rounded-full p-1.5 cursor-pointer'>
                     Book Now
                 </button>
-            </div>) : <div className='text-center'><h2>No shows for this movie</h2></div>}
+            </div>) : <div className='text-center'><h2>No active shows for this movie</h2></div>}
         </div>
     )
 }

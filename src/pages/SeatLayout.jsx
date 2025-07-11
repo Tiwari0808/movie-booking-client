@@ -14,7 +14,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import RenderSeat from "../components/RenderSeats";
-import { number } from "framer-motion";
 
 const SeatLayout = () => {
   const groupRows = [
@@ -34,6 +33,9 @@ const SeatLayout = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [showPrice, setShowPrice] = useState(null);
+  const [movieId, setMovieId] = useState(null);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
   const getShow = async () => {
     const snapshot = await getDocs(collection(db, "shows"));
     const shows = snapshot.docs.map((show) => ({
@@ -44,32 +46,35 @@ const SeatLayout = () => {
     if (show) {
       setShow(show);
       setShowPrice(Number(show.showPrice));
+      setMovieId(show.movieId);
     } else {
       toast.error("No Shows found for this movie");
       setShow(null);
     }
-  };  
+  };
+
+
 
   const bookingData = {
     movieName: show ? show.movieTitle : "",
-    date,
+    movieId: movieId,
+    name,
+    email,
     selectedSeats,
     selectedTime: selectedTime,
     poster_path: show ? show.poster_path : '',
-    showPrice:showPrice,
-    isPaid:false,
-    runtime:show?show.runtime:null
+    showPrice: showPrice,
+    isPaid: false,
+    runtime: show ? show.runtime : null
   };
-
-  const timingsOfSelectedShow = show ? show.selectedDateTime.filter((dt) => {
-    const dtDate = dt.split("T")[0];
-    return dtDate === date;
-  }) : '';
 
   const bookingHandler = async () => {
     if (selectedSeats.length < 1) {
       return toast.error("Please select the seat");
     }
+    if (!name) return toast.error('Please Enter Your Name');
+    if (!email) return toast.error('Please Enter Your Email');
+
     try {
       await addDoc(collection(db, "bookings"), bookingData);
       const showRef = doc(db, "shows", show.id);
@@ -77,11 +82,15 @@ const SeatLayout = () => {
         [`occupiedSeats.${selectedTime}`]: {
           ...(show.occupiedSeats?.[selectedTime] || {}),
           ...Object.fromEntries(
-            selectedSeats.map((seat, index) => [seat, `Booked`])
+            selectedSeats.map((seat) => [seat, 'Booked'])
           ),
         },
       });
       toast.success("Booking Confirmed");
+      setSelectedSeats([]);
+      setSelectedTime(null);
+      setName('');
+      setEmail('');
       navigate("/myBookings");
       scrollTo(0, 0);
     } catch (error) {
@@ -102,6 +111,11 @@ const SeatLayout = () => {
         : [...prev, seatId]
     );
   };
+
+  const timingsOfSelectedShow = show ? show.selectedDateTime.filter((dt) => {
+    const dtDate = dt.split("T")[0];
+    return dtDate === date;
+  }) : '';
 
   useEffect(() => {
     getShow();
@@ -137,7 +151,7 @@ const SeatLayout = () => {
       </div>
 
       {/* MIDDLE: Screen + Seats */}
-      <div className="w-full flex flex-col gap-[1vh] h-screen items-center">
+      <div className="w-full flex flex-col gap-[0vh] h-screen items-center mb-2 md:mb-3">
         <div className="flex justify-center w-full flex-col items-center py-4 gap-2">
           <h2 className="text-xl md:text-2xl font-semibold">
             Select Your Seat
@@ -178,10 +192,14 @@ const SeatLayout = () => {
             </span>
           ))}
         </div>
+        <div className="flex gap-2 flex-col mt-5">
+          <input type="text" placeholder="Enter Name" required value={name} onChange={(e) => setName(e.target.value)} className="border border-primary text-center rounded-[4px]" />
+          <input type="email" placeholder="Enter Email" required value={email} onChange={(e) => setEmail(e.target.value)} className="border border-primary text-center  rounded-[4px]" />
+        </div>
         <div
           onClick={() => bookingHandler()}
-          className={`border cursor-pointer  border-primary flex justify-center ${selectedSeats.length > 0 && "bg-primary"
-            } items-center w-[98px] px-2 py-1 rounded-full`}>
+          className={`border cursor-pointer mt-5 md:mt-8  border-primary flex  justify-center ${selectedSeats.length > 0 && email && name && "bg-primary"
+            } items-center w-[98px] px-2 py-1 rounded-full `}>
           <button className="cursor-pointer text-[16px] text-center">
             Checkout
           </button>
