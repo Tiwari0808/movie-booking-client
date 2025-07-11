@@ -122,7 +122,7 @@ const SeatLayout = () => {
   }, []);
 
   return show ? (
-    <div className="px-4 py-[15vh] md:px-12 lg:px-[112px] md:py-20 flex flex-col lg:flex-row gap-8 md:gap-10">
+    <div className="px-4 py-[15vh] md:px-12 lg:px-[112px] md:py-20 flex flex-col lg:flex-row md:gap-10">
       {/* LEFT: Show Times */}
       <div className="flex flex-col justify-center">
         <div className="px-2 py-2 gap-4 w-full lg:w-[222px] max-h-[240px] bg-primary/15 rounded-[12px] border border-primary flex flex-col justify-center">
@@ -192,14 +192,14 @@ const SeatLayout = () => {
             </span>
           ))}
         </div>
-        <div className="flex gap-2 flex-col mt-5">
+        <div className="flex gap-2 flex-col py-5">
           <input type="text" placeholder="Enter Name" required value={name} onChange={(e) => setName(e.target.value)} className="border border-primary text-center rounded-[4px]" />
           <input type="email" placeholder="Enter Email" required value={email} onChange={(e) => setEmail(e.target.value)} className="border border-primary text-center  rounded-[4px]" />
         </div>
         <div
           onClick={() => bookingHandler()}
           className={`border cursor-pointer mt-5 md:mt-8  border-primary flex  justify-center ${selectedSeats.length > 0 && email && name && "bg-primary"
-            } items-center w-[98px] px-2 py-1 rounded-full `}>
+            } items-center w-[98px] px-2  rounded-full `}>
           <button className="cursor-pointer text-[16px] text-center">
             Checkout
           </button>

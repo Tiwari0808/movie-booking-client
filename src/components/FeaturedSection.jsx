@@ -23,7 +23,6 @@ const FeaturedSection = () => {
             }));
             setMovies(movies);
             setIsLoading(false);
-            toast.success('Data fetched successfully');
         } catch (error) {
             toast.error(error.message);
         }

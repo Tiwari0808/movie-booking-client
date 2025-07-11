@@ -50,7 +50,7 @@ const ListShows = () => {
   return !loading ? (
     <div className='md:px-[6vw] md:py-[4vh] px-3 py-3 flex flex-col gap-6'>
       <div>
-        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List <span className='text-primary'>Bookings</span></h2>
+        <h2 className='max-w-[206px] md:text-[26px] text-left flex gap-1'>List <span className='text-primary'>Shows</span></h2>
       </div>
       <div>
         <table className='w-full border-collapse bg-primary/25 border border-primary'>

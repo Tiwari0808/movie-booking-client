@@ -8,6 +8,8 @@ import { RxCross1 } from "react-icons/rx";
 import toast from "react-hot-toast";
 import { db } from "../../firebase/firebaseConfig";
 import { addDoc, collection, getDocs } from "firebase/firestore";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Addshows = () => {
   const [shows, setShows] = useState(null);
@@ -18,7 +20,9 @@ const Addshows = () => {
   const [selectedMovieId, setSelectedMovieId] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [poster_path, setPoster_path] = useState(null);
-  const [runtime,setRuntime] = useState(null);
+  const [runtime, setRuntime] = useState(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const getData = async () => {
     try {
@@ -59,6 +63,16 @@ const Addshows = () => {
     if (selectedDateTime.length < 1) {
       return toast.error("Select Show Date and Time");
     }
+    if (selectedDateTime.length > 1) {
+      return toast.error("You can select only three shows time");
+    }
+    if (selectedDateTime.includes(selectDateTime)) {
+      return toast.error("This time slot is already selected");
+    }
+    if (!user) {
+      navigate('/admin/login')
+      return toast.error('Please login to add shows');
+    }
 
     const addShowData = {
       showPrice: showPrice,
@@ -66,7 +80,7 @@ const Addshows = () => {
       movieTitle: movieTitle,
       selectedDateTime: selectedDateTime,
       poster_path: poster_path,
-      runtime:runtime
+      runtime: runtime
     };
 
     try {
@@ -84,8 +98,6 @@ const Addshows = () => {
   const clearDateTimeHandler = (id) => {
     setSelectedDateTime(selectedDateTime.filter((_, i) => i !== id));
   };
-
-  console.log();
 
   useEffect(() => {
     getData();
