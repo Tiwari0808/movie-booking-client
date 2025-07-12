@@ -40,7 +40,6 @@ const ListBookings = () => {
             <tbody>
               {showsData.map((item) => (
                 <tr key={item.id} className="border-b border-primary/40">
-                  {console.log(item)}
                   <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.name}</td>
                   <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.movieName.slice(0,20)}</td>
                   <td className="font-extralight text-[7px] text-center md:text-[13px]">{item.selectedTime}</td>

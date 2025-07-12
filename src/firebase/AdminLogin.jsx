@@ -22,7 +22,7 @@ const AdminLogin = () => {
       }
       const result = await signInWithEmailAndPassword(auth, email, password);
       setUser(result.user);
-      navigate('/admin/dashboard')
+      navigate('/admin/addShows')
       toast.success('Logged in successfully!');
     } catch (error) {
       setEmail('');
